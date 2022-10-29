@@ -7,6 +7,7 @@ const tesseract = require("tesseract.js");
 const axios = require("axios");
 const Image = require("./models/image");
 const User = require("./models/user");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
@@ -26,6 +27,8 @@ database.on("error", (err) => console.error(err));
 database.once("open", () => console.log("Connected to Database"));
 
 app.set("view engine", "ejs");
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 const storage = multer.diskStorage({
@@ -79,8 +82,6 @@ app.post("/upload", upload.single("image"), async (req, res, next) => {
       console.log(newImageData);
       res.status(200).redirect(`/image/${newImageData._id.toString()}`);
     });
-
-  res.status(400).redirect("/");
 });
 
 app.post("/register", async (req, res, next) => {
@@ -95,14 +96,24 @@ app.post("/register", async (req, res, next) => {
   res.status(200).json(user);
 });
 
+app.get("/register", (req, res, next) => {
+  res.status(200).render("register");
+});
+
 app.post("/login", async (req, res, next) => {
-  let user = await User.findOne({ email: req.body.email });
+  console.log("F");
+  console.log(req.body);
+  // let user = await User.findOne({ email: req.body.email });
 
-  if (user === null) res.status(404).json({ message: "User not found" });
+  // if (user === null) res.status(404).json({ message: "User not found" });
 
-  if (user.password !== req.body.password) res.status(403).json({ message: "Invalid Password" });
+  // if (user.password !== req.body.password) res.status(403).json({ message: "Invalid Password" });
 
-  res.status(200).json(user);
+  res.status(200).json("user");
+});
+
+app.get("/login", (req, res, next) => {
+  res.status(200).render("login");
 });
 
 app.get("/image/:id", async (req, res, next) => {
