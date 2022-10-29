@@ -4,15 +4,43 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Login</title>
   </head>
   <body>
-    <main>
-      <form method="post" action="/login">
-        <input type="email" name="email" />
-        <input type="password" name="password" />
-        <button>Submit</button>
-      </form>
+    <main class="min-h-screen grid place-content-center">
+      <div class="w-full p-4 flex items-center justify-center">
+        <div class="bg-white py-6 px-10 sm:max-w-md w-full">
+          <div class="sm:text-3xl text-2xl font-semibold text-center text-sky-600 mb-12">
+            Login Form
+          </div>
+          <form method="post" action="/login" enctype="multipart/form-data">
+            <div>
+              <input
+                type="email"
+                name="email"
+                class="focus:outline-none border-b p-1 w-full pb-2 border-sky-400 placeholder-gray-500 my-8"
+                placeholder="Eamil Adress "
+              />
+            </div>
+            <div class="">
+              <input
+                type="password"
+                name="passowrd"
+                class="focus:outline-none p-1 border-b w-full pb-2 border-sky-400 placeholder-gray-500 mb-8"
+                placeholder="Password "
+              />
+            </div>
+            <div class="flex justify-center my-6">
+              <button
+                class="rounded-full p-3 w-full sm:w-56 bg-gradient-to-r from-sky-600 to-teal-300 text-white text-lg font-semibold"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
   </body>
 </html>
