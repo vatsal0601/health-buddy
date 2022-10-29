@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const tesseract = require("tesseract.js");
 const axios = require("axios");
 const Image = require("./models/image");
+const User = require("./models/user");
 require("dotenv").config();
 
 const app = express();
@@ -68,7 +69,7 @@ app.post("/upload", upload.single("image"), async (req, res, next) => {
           }
         );
         console.log(`${word}: ${resAPI.data.hints.length}`);
-        imageData.push({ word: resAPI.data.hints });
+        imageData.push({ word, data: resAPI.data.hints });
       }
       return imageData;
     })
@@ -80,6 +81,28 @@ app.post("/upload", upload.single("image"), async (req, res, next) => {
     });
 
   res.status(400).redirect("/");
+});
+
+app.post("/register", async (res, res, next) => {
+  let user = await User.findOne({ email: req.body.email });
+
+  if (user === null) {
+    user = new User({ name: req.body.name, email: req.body.email, password: req.body.password });
+    const newUser = user.save();
+    res.status(201).json(newUser);
+  }
+
+  res.status(200).json(user);
+});
+
+app.post("/login", async (res, res, next) => {
+  let user = await User.findOne({ email: req.body.email });
+
+  if (user === null) res.status(404).json({ message: "User not found" });
+
+  if (user.password !== req.body.password) res.status(403).json({ message: "Invalid Password" });
+
+  res.status(200).json(user);
 });
 
 app.get("/image/:id", async (req, res, next) => {
