@@ -83,7 +83,7 @@ app.post("/upload", upload.single("image"), async (req, res, next) => {
   res.status(400).redirect("/");
 });
 
-app.post("/register", async (res, res, next) => {
+app.post("/register", async (req, res, next) => {
   let user = await User.findOne({ email: req.body.email });
 
   if (user === null) {
@@ -95,7 +95,7 @@ app.post("/register", async (res, res, next) => {
   res.status(200).json(user);
 });
 
-app.post("/login", async (res, res, next) => {
+app.post("/login", async (req, res, next) => {
   let user = await User.findOne({ email: req.body.email });
 
   if (user === null) res.status(404).json({ message: "User not found" });
