@@ -12,7 +12,7 @@
 <body>
   <main class="w-90 mx-auto">
     <div class="w-full text-center">
-      <img class="m-auto mt-4" src="http://localhost:5000/images/<%= image.filename %>" alt="image" />
+      <img class="mx-auto mt-4 rounded-md" src="http://localhost:5000/images/<%= image.filename %>" alt="image" />
     </div>
     <div class="box">
 
@@ -21,7 +21,7 @@
           color: red;
         }
       </style>
-      <ul class="my-3">
+      <ul class="my-5 container px-5 lg:px-10 mx-auto">
 
         <% for(var i=0; i<image.data.length; i++) { %>
           <li class="border-y-2">
